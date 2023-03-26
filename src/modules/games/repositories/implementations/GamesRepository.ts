@@ -25,17 +25,11 @@ export class GamesRepository implements IGamesRepository {
   }
 
   async findUsersByGameId(id: string): Promise<User[]> {
-    // return await this.repository
-    //   .createQueryBuilder("game")
-    //   .innerJoinAndMapMany("game.users", "game.users", "user")      
-    //   .where("game.id = :id", { id: id })
-    //   .getRawMany()
-      // Complete usando query builder
     return await this.repository
       .createQueryBuilder("game")
       .select('user.first_name as first_name, user.email as email, user.last_name as last_name')
       .where("game.id = :id", { id: id })
       .leftJoin('game.users', 'user')
-      .getRawMany()
+      .getRawMany()// Complete usando query builder
   }
 }
